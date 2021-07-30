@@ -49,11 +49,6 @@ public class UnitOfWork {
 
     @Override
     public String toString() {
-        return "UnitOfWork{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", address='" + address + '\'' +
-                ", employees=" + employees +
-                '}';
+        return "id: " + id + " employees:  " + employees;
     }
 }

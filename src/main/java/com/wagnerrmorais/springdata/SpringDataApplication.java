@@ -2,6 +2,7 @@ package com.wagnerrmorais.springdata;
 
 import com.wagnerrmorais.springdata.orm.Role;
 import com.wagnerrmorais.springdata.service.EmployeeService;
+import com.wagnerrmorais.springdata.service.ReportService;
 import com.wagnerrmorais.springdata.service.RoleService;
 import com.wagnerrmorais.springdata.service.UnitOfWorkService;
 import org.springframework.boot.CommandLineRunner;
@@ -18,11 +19,16 @@ public class SpringDataApplication implements CommandLineRunner {
     private final RoleService roleService;
     private final UnitOfWorkService unitOfWorkService;
     private final EmployeeService employeeService;
+    private final ReportService reportService;
 
-    public SpringDataApplication(RoleService roleService, UnitOfWorkService unitOfWorkService, EmployeeService employeeService) {
+    public SpringDataApplication(RoleService roleService,
+                                 UnitOfWorkService unitOfWorkService,
+                                 EmployeeService employeeService,
+                                 ReportService reportService) {
         this.roleService = roleService;
         this.unitOfWorkService = unitOfWorkService;
         this.employeeService = employeeService;
+        this.reportService = reportService;
     }
 
     public static void main(String[] args) {
@@ -33,12 +39,13 @@ public class SpringDataApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Scanner scanner = new Scanner(System.in);
 
-        while(system){
+        while (system) {
             System.out.println("Which action would you like to execute?");
             System.out.println("0 - Exit");
             System.out.println("1 - Role");
             System.out.println("2 - UnitOfWork");
             System.out.println("3 - Employee");
+            System.out.println("4 - Report");
 
             int action = scanner.nextInt();
 
@@ -51,6 +58,9 @@ public class SpringDataApplication implements CommandLineRunner {
                     break;
                 case 3:
                     employeeService.init(scanner);
+                    break;
+                case 4:
+                    reportService.init(scanner);
                     break;
                 default:
                     system = false;
