@@ -49,8 +49,6 @@ public class RoleService {
             }
 
         }
-
-        save(scanner);
     }
 
     private void deleteById(Scanner scanner) {

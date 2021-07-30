@@ -4,16 +4,15 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "unit_of_work")
+public class UnitOfWork {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String description;
-
-    @OneToMany(mappedBy = "role")
+    private String address;
+    @ManyToMany(mappedBy = "workUnities", fetch = FetchType.EAGER)
     private List<Employee> employees;
 
     public Integer getId() {
@@ -32,6 +31,14 @@ public class Role {
         this.description = description;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public List<Employee> getEmployees() {
         return employees;
     }
@@ -42,9 +49,11 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "UnitOfWork{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
+                ", address='" + address + '\'' +
+                ", employees=" + employees +
                 '}';
     }
 }

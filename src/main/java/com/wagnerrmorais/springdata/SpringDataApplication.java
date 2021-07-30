@@ -1,7 +1,9 @@
 package com.wagnerrmorais.springdata;
 
 import com.wagnerrmorais.springdata.orm.Role;
+import com.wagnerrmorais.springdata.service.EmployeeService;
 import com.wagnerrmorais.springdata.service.RoleService;
+import com.wagnerrmorais.springdata.service.UnitOfWorkService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,10 +15,14 @@ public class SpringDataApplication implements CommandLineRunner {
 
     private Boolean system = true;
 
-    private final RoleService service;
+    private final RoleService roleService;
+    private final UnitOfWorkService unitOfWorkService;
+    private final EmployeeService employeeService;
 
-    public SpringDataApplication(RoleService service) {
-        this.service = service;
+    public SpringDataApplication(RoleService roleService, UnitOfWorkService unitOfWorkService, EmployeeService employeeService) {
+        this.roleService = roleService;
+        this.unitOfWorkService = unitOfWorkService;
+        this.employeeService = employeeService;
     }
 
     public static void main(String[] args) {
@@ -31,12 +37,24 @@ public class SpringDataApplication implements CommandLineRunner {
             System.out.println("Which action would you like to execute?");
             System.out.println("0 - Exit");
             System.out.println("1 - Role");
+            System.out.println("2 - UnitOfWork");
+            System.out.println("3 - Employee");
 
             int action = scanner.nextInt();
-            if(action == 1) {
-                service.init(scanner);
-            } else {
-                system = false;
+
+            switch (action) {
+                case 1:
+                    roleService.init(scanner);
+                    break;
+                case 2:
+                    unitOfWorkService.init(scanner);
+                    break;
+                case 3:
+                    employeeService.init(scanner);
+                    break;
+                default:
+                    system = false;
+                    break;
             }
         }
 
