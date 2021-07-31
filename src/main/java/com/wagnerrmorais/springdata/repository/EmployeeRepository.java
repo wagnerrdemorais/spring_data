@@ -2,6 +2,7 @@ package com.wagnerrmorais.springdata.repository;
 
 import com.wagnerrmorais.springdata.orm.Employee;
 import com.wagnerrmorais.springdata.orm.EmployeeProjection;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -9,7 +10,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Integer> {
+public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Integer>,
+        JpaSpecificationExecutor<Employee> {
 
     List<Employee> findByName(String name);
 
