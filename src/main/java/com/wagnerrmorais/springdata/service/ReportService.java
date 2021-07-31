@@ -67,4 +67,12 @@ public class ReportService {
         list.forEach(System.out::println);
     }
 
+    private void findEmployeeByStartingDateGT(Scanner scanner){
+        System.out.println("Which date ?: 'dd/MM/yyyy' ");
+        String startingDate = scanner.next();
+        LocalDate date = LocalDate.parse(startingDate, formatter);
+        List<Employee> employees = employeeRepository.findStargingDateGT(date);
+        employees.forEach(System.out::println);
+    }
+
 }

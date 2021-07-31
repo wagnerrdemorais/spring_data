@@ -16,4 +16,8 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
     @Query("SELECT e FROM Employee e WHERE e.name = :name AND e.salary >= :salary AND e.startingDate = :date")
     List<Employee> findNameSalaryGreaterStartingDate(String name, Double salary, LocalDate date);
 
+    @Query(value = "SELECT * FROM employees e WHERE e.starting_date >= :date",
+            nativeQuery = true)
+    List<Employee> findStargingDateGT(LocalDate date);
+
 }
