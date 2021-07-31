@@ -6,6 +6,10 @@ import com.wagnerrmorais.springdata.orm.UnitOfWork;
 import com.wagnerrmorais.springdata.repository.EmployeeRepository;
 import com.wagnerrmorais.springdata.repository.RoleRepository;
 import com.wagnerrmorais.springdata.repository.UnitOfWorkRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -50,7 +54,7 @@ public class EmployeeService {
                     update(scanner);
                     break;
                 case 3:
-                    findAll();
+                    findAll(scanner);
                     break;
                 case 4:
                     deleteById(scanner);
@@ -132,9 +136,18 @@ public class EmployeeService {
         System.out.println("Alterado");
     }
 
-    public void findAll() {
-        Iterable<Employee> funcionarios = employeeRepository.findAll();
-        funcionarios.forEach(funcionario -> System.out.println(funcionario));
+    public void findAll(Scanner scanner) {
+        System.out.println("Which page do you wish to view?");
+        Integer page = scanner.nextInt();
+
+        Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.ASC, "name"));
+        Page<Employee> employees = employeeRepository.findAll(pageable);
+
+        System.out.println(employees);
+        System.out.println("Current page " + employees.getNumber());
+        System.out.println("Total " + employees.getTotalElements());
+        
+        employees.forEach(System.out::println);
         system = false;
     }
 

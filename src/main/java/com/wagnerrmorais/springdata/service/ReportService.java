@@ -1,6 +1,7 @@
 package com.wagnerrmorais.springdata.service;
 
 import com.wagnerrmorais.springdata.orm.Employee;
+import com.wagnerrmorais.springdata.orm.EmployeeProjection;
 import com.wagnerrmorais.springdata.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.Scanner;
 public class ReportService {
 
     private Boolean system = true;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/aaaa");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final EmployeeRepository employeeRepository;
 
@@ -26,7 +27,9 @@ public class ReportService {
             System.out.println("Which Report action would you like to execute?");
             System.out.println("0 - Exit");
             System.out.println("1 - find employee by name");
-            System.out.println("1 - find employee by name");
+            System.out.println("2 - find employee by SalaryGT and StartingDate: ");
+            System.out.println("3 - find employee by startingDate gt: ");
+            System.out.println("4 - find employees with salary: ");
 
             int action = scanner.nextInt();
 
@@ -36,6 +39,12 @@ public class ReportService {
                     break;
                 case 2:
                     findEmployeeSalaryGTAndStartingDate(scanner);
+                    break;
+                case 3:
+                    findEmployeeByStartingDateGT(scanner);
+                    break;
+                case 4:
+                    findEmployeesSalary();
                     break;
                 default:
                     system = false;
@@ -55,7 +64,6 @@ public class ReportService {
         System.out.println("Name: ");
         String name = scanner.next();
 
-
         System.out.println("Starting date: ");
         String startingDate = scanner.next();
         LocalDate date = LocalDate.parse(startingDate, formatter);
@@ -73,6 +81,14 @@ public class ReportService {
         LocalDate date = LocalDate.parse(startingDate, formatter);
         List<Employee> employees = employeeRepository.findStargingDateGT(date);
         employees.forEach(System.out::println);
+    }
+
+    private void findEmployeesSalary() {
+        List<EmployeeProjection> list = employeeRepository.findEmployeeSalary();
+        list.forEach(employeeProjection -> System.out.println("Employee: Id: " + employeeProjection.getId()
+        + " | name: " + employeeProjection.getName()
+        + " | salary: " + employeeProjection.getSalary())
+        );
     }
 
 }
